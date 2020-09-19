@@ -9689,6 +9689,11 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-easy-notify@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-easy-notify/-/react-easy-notify-1.0.4.tgz#0e283e5817ff64b5e668066c1a894b71b2a71a3d"
+  integrity sha512-4PjcTUdB6+Ht87b9qiLvzk3uP+xnMZ8Uyv83YeYNm/VqXj3r21JOFtxHEUH2qN7cbBGYrkc4DPYFTMlpdyHJNg==
+
 react-error-overlay@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"

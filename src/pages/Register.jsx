@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import '../assets/css/index.css';
-import OurNavbar from '../components/OurNavbar';
-import OurFooter from '../components/OurFooter';
-import FormRegister from '../components/forms/FormRegister';
+import FormRegister from '../components/Forms/FormRegister';
 
 
 class Register extends Component {
   render() {
     return (
-      <>
-        <OurNavbar />
-        <main>
-          <section>
-            <FormRegister />
-          </section>
-        </main>
-        <OurFooter />
-      </>
+      <section>
+        <FormRegister />
+      </section>
     );
   }
 }

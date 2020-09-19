@@ -54,6 +54,11 @@ export default class FormRegister extends Component {
                 Register
               </CardHeader>
               <CardBody>
+                <Col>
+                  <UncontrolledAlert color="dark">
+                    You've not yet registered?<a href="/" className="UncontrolledAlert-link"> Go to login</a>
+                  </UncontrolledAlert>
+                </Col>
                 <Form className="form" onSubmit={this.handleRegister}>
                   <Col>
                     <FormGroup>
@@ -123,13 +128,8 @@ export default class FormRegister extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col>
-                    <UncontrolledAlert color="dark">
-                      You'v already registered?<a href="/" className="UncontrolledAlert-link"> Go to login</a>
-                    </UncontrolledAlert>
-                  </Col>
                   <Col className="text-center">
-                    <Button color="primary" type="submit">Login</Button>
+                    <Button color="primary" type="submit">Register</Button>
                   </Col>
                 </Form>
               </CardBody>

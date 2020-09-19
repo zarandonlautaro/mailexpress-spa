@@ -5,8 +5,8 @@ import {
   Button, UncontrolledAlert, Card, CardBody, CardHeader
 } from 'reactstrap';
 import * as axios from '../../utils/axios';
-
-export default class FormLogin extends Component {
+import { withRouter } from "react-router-dom";
+class FormLogin extends Component {
   state = {
     email: '',
     password: '',
@@ -28,8 +28,9 @@ export default class FormLogin extends Component {
       email,
       password,
     });
-    const { message } = res.data
-    console.log(message)
+    const { history } = this.props;
+    const token = res.data.body;
+    history.push(`/auth/${token}`);
   }
 
   render() {
@@ -42,6 +43,11 @@ export default class FormLogin extends Component {
                 Login
               </CardHeader>
               <CardBody>
+                <Col>
+                  <UncontrolledAlert color="dark">
+                    You'v not yet registered? <a href="/register" className="UncontrolledAlert-link">Go to form register</a>
+                  </UncontrolledAlert>
+                </Col>
                 <Form className="form" onSubmit={this.handleLogin}>
                   <Col>
                     <FormGroup>
@@ -67,11 +73,6 @@ export default class FormLogin extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col>
-                    <UncontrolledAlert color="dark">
-                      You'v not yet registered? <a href="/register" className="UncontrolledAlert-link">Go to form register</a>
-                    </UncontrolledAlert>
-                  </Col>
                   <Col className="text-center">
                     <Button color="primary" type="submit">Login</Button>
                   </Col>
@@ -84,3 +85,5 @@ export default class FormLogin extends Component {
     )
   }
 }
+
+export default withRouter(FormLogin);

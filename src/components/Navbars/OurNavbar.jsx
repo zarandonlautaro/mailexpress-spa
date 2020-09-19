@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -9,6 +9,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import logoMailExpress from '../../assets/img/logoMailExpress.png';
 
 const OurNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,15 +17,17 @@ const OurNavbar = () => {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/">MailExpress</NavbarBrand>
+      <NavbarBrand tag={Link} to="/">
+        <img src={logoMailExpress} alt="" />
+      </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="/">Login</NavLink>
+            <NavLink tag={Link} activeClassName="current" to="/" exact>Login</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/register">Register</NavLink>
+            <NavLink tag={Link} activeClassName="current" to="/register">Register</NavLink>
           </NavItem>
         </Nav>
       </Collapse>

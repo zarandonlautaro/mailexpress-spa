@@ -13,8 +13,8 @@ base.interceptors.response.use(
     (res) => {
         if (res) {
             if (res.config.method === 'post' || res.config.method === 'delete' || res.config.method === 'put')
-                console.log(res.data.message);
-            return (res);
+                return (res);
+            //console.log(res.data.message);
         }
     },
     (err) => {

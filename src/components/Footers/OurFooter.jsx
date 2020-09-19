@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import IconGitHub from '../assets/img/github.svg';
-import IconLinkedin from '../assets/img/linkedin.svg';
+import IconGitHub from '../../assets/img/github.svg';
+import IconLinkedin from '../../assets/img/linkedin.svg';
 import { Container, Row, Col } from 'reactstrap';
 
 export default class OurFooter extends Component {
