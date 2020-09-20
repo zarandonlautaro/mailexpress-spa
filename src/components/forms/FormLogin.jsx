@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Container, Row, Col, Form,
-  FormGroup, Label, Input,
-  Button, Card, CardBody, CardHeader, FormText,
-} from 'reactstrap';
-import * as axios from '../../utils/axios';
-import { validateEmail } from '../../utils/formHelpers';
 import { withRouter, Link } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Card, CardBody, CardHeader, } from 'reactstrap';
+import { validateEmail } from '../../utils/formHelpers';
 import { toast } from 'react-toastify';
+import * as axios from '../../utils/axios';
+
+import OurInput from '../Inputs/OurInput';
+
 class FormLogin extends Component {
   state = {
     email: '',
@@ -50,25 +49,25 @@ class FormLogin extends Component {
 
   handleLogin = async (e) => {
     e.preventDefault();
-    const { history } = this.props;
-    const {
-      email,
-      password,
-    } = this.state;
+    this.setState({ loading: true });
+    const { email, password } = this.state;
     const res = await axios.axiosPost('/user/login', {
       email,
       password,
     });
-    this.setState({ loading: true });
-    const { success, body, message } = res.data;
-    if (success) {
-      const token = body;
-      return history.push(`/auth/${token}`);
-    }
-    return this.handleError(message);
+    const {
+      success, body, message
+    } = res.data;
+    if (success) this.validLogin(body)
+    return this.invalidLogin(message);
   }
 
-  handleError = (message) => {
+  validLogin = (token) => {
+    const { history } = this.props;
+    return history.push(`/auth/${token}`);
+  }
+
+  invalidLogin = (message) => {
     this.setState({ loading: false });
     return toast.error(message)
   }
@@ -86,54 +85,25 @@ class FormLogin extends Component {
               </CardHeader>
               <CardBody>
                 <Form className="form" onSubmit={this.handleLogin}>
-                  <Row>
-
-                    <Col>
-                      <FormGroup>
-                        <Label>Email</Label>
-                        <Input
-                          type="email"
-                          name="email"
-                          id="exampleEmail"
-                          placeholder="myemail@email.com"
-                          onChange={this.handleChangeInputForm}
-                          onBlur={this.handleValidateInputForm}
-                        />
-                        {
-                          email
-                          && (
-                            <FormText color="danger">
-                              {email}
-                            </FormText>
-                          )
-                        }
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <Label for="examplePassword">Password</Label>
-                        <Input
-                          type="password"
-                          name="password"
-                          id="examplePassword"
-                          placeholder="********"
-                          onChange={this.handleChangeInputForm}
-                          onBlur={this.handleValidateInputForm}
-                          onKeyPress={this.handleKeyPress}
-                        />
-                        {
-                          password
-                          && (
-                            <FormText color="danger">
-                              {password}
-                            </FormText>
-                          )
-                        }
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                  <OurInput
+                    label="Email"
+                    type="email"
+                    name="email"
+                    error={email}
+                    placeholder="myemail@email.com"
+                    onChange={this.handleChangeInputForm}
+                    onBlur={this.handleValidateInputForm}
+                  />
+                  <OurInput
+                    label="Password"
+                    type="password"
+                    name="password"
+                    error={password}
+                    placeholder="********"
+                    onKeyPress={this.handleKeyPress}
+                    onBlur={this.handleValidateInputForm}
+                    onChange={this.handleChangeInputForm}
+                  />
                   <Row>
                     <Col className="text-center">
                       <Button disabled={disabledButton} color="primary" type="submit">
