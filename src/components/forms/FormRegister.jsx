@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Container, Row, Col, Form,
   FormGroup, Label, Input,
-  Button, UncontrolledAlert, Card, CardBody, CardHeader
+  Button, Card, CardBody, CardHeader
 } from 'reactstrap';
 import * as axios from '../../utils/axios';
 
@@ -54,11 +55,6 @@ export default class FormRegister extends Component {
                 Register
               </CardHeader>
               <CardBody>
-                <Col>
-                  <UncontrolledAlert color="dark">
-                    You've not yet registered?<a href="/" className="UncontrolledAlert-link"> Go to login</a>
-                  </UncontrolledAlert>
-                </Col>
                 <Form className="form" onSubmit={this.handleRegister}>
                   <Col>
                     <FormGroup>
@@ -128,9 +124,16 @@ export default class FormRegister extends Component {
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="text-center">
-                    <Button color="primary" type="submit">Register</Button>
-                  </Col>
+                  <Row>
+                    <Col className="text-center">
+                      <Button color="secondary" outline to="/" tag={Link} className="UncontrolledAlert-link">
+                        Log In
+                    </Button>
+                    </Col>
+                    <Col className="text-center">
+                      <Button color="primary" type="submit">Sign In</Button>
+                    </Col>
+                  </Row>
                 </Form>
               </CardBody>
             </Card>

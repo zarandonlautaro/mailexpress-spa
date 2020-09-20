@@ -12,3 +12,6 @@ footer {
 .current {
   border-bottom: 4px solid white;
 }
+.current-danger {
+  border-bottom: 4px solid red;
+}

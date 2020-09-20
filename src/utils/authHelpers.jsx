@@ -1,11 +1,24 @@
+import jwt_decode from "jwt-decode";
+
 const isLogin = () => {
   const token = localStorage.getItem('token');
   if (token) return true;
   return false;
 }
 
-const setToken = (token) => {
+const getUserDataToken = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
+  const decoded = jwt_decode(token);
+  console.log(decoded)
+  return decoded;
+}
+const loginWithToken = (token) => {
   localStorage.setItem('token', token);
 }
 
-export { setToken, isLogin };
+const logOut = () => {
+  return localStorage.removeItem('token');
+}
+
+export { logOut, loginWithToken, isLogin, getUserDataToken };

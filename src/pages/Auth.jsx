@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { setToken } from '../utils/authHelpers';
+import { loginWithToken } from '../utils/authHelpers';
 
 class Auth extends Component {
 
   componentDidMount() {
     const { token } = this.props.match.params;
-    setToken(token);
+    loginWithToken(token);
     const { history } = this.props;
     history.push('/dashboard');
   }

@@ -10,18 +10,11 @@ const base = axios.create({
 });
 
 base.interceptors.response.use(
-    (res) => {
-        if (res) {
-            if (res.config.method === 'post' || res.config.method === 'delete' || res.config.method === 'put')
-                return (res);
-            //console.log(res.data.message);
-        }
-    },
+    (res) => res,
     (err) => {
         if (err) {
             const { response } = err;
             if (response.status === 400 || response.status === 404 || response.status === 500) {
-                // console.log(response.data.message)
                 return response;
             }
             return err;

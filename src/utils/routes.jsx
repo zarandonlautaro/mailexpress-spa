@@ -2,14 +2,16 @@ import React from 'react';
 import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Layout from '../components/Layouts/Layout';
 
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Auth from '../pages/Auth';
 import Dashboard from '../pages/Dashboard';
 import PrivateRoute from '../utils/privateRoute';
-
-import Layout from '../components/Layouts/Layout';
 
 const Router = () => {
   return (
@@ -24,6 +26,7 @@ const Router = () => {
             <Redirect to="/" />
           </Layout>
         </Switch>
+        <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} closeOnClick={false} pauseOnHover draggable />
       </BrowserRouter>
     </>
   );

@@ -10,7 +10,7 @@ import {
   NavLink,
 } from 'reactstrap';
 import logoMailExpress from '../../assets/img/logoMailExpress.png';
-
+import { isLogin, logOut } from '../../utils/authHelpers';
 const OurNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,12 +23,27 @@ const OurNavbar = () => {
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
-          <NavItem>
-            <NavLink tag={Link} activeClassName="current" to="/" exact>Login</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} activeClassName="current" to="/register">Register</NavLink>
-          </NavItem>
+          {
+            isLogin() ? (
+              <>
+                <NavItem>
+                  <NavLink tag={Link} activeClassName="current" to="/dashboard" exact>Dashboard</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-danger" activeClassName="current-danger" to="/" onClick={logOut} exact>Log Out</NavLink>
+                </NavItem>
+              </>
+            )
+              : (
+                <>
+                  <NavItem>
+                    <NavLink tag={Link} activeClassName="current" to="/" exact>Login</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink tag={Link} activeClassName="current" to="/register">Register</NavLink>
+                  </NavItem>
+                </>
+              )}
         </Nav>
       </Collapse>
     </Navbar>
