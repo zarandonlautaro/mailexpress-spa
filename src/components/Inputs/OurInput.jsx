@@ -9,7 +9,7 @@ export default class OurInput extends Component {
     onKeyPress: this.props.handleKeyPress,
   }
   render() {
-    const { label, type, name, placeholder, error } = this.props;
+    const { label, type, name, placeholder, error, value } = this.props;
     const { onChange, onBlur } = this.state;
     return (
       <Row>
@@ -17,6 +17,7 @@ export default class OurInput extends Component {
           <FormGroup>
             <Label>{label}</Label>
             <Input
+              value={value}
               type={type}
               name={name}
               placeholder={placeholder}

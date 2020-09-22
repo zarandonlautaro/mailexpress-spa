@@ -10,7 +10,6 @@ const getUserDataToken = () => {
   const token = localStorage.getItem('token');
   if (!token) return false;
   const decoded = jwt_decode(token);
-  console.log(decoded)
   return decoded;
 }
 const loginWithToken = (token) => {

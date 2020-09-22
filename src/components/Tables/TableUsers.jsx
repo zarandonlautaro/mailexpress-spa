@@ -1,61 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col, Card } from 'reactstrap';
-import { getUserDataToken } from '../../utils/authHelpers';
-import * as axios from '../../utils/axios';
-const TableUser = () => {
-  const [users, setUsers] = useState([]);
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { Col, Row, Table, Button } from 'reactstrap';
+import { getDayMonthYear } from '../../utils/formHelpers';
+import { IoIosTrash, IoIosCreate } from 'react-icons/io';
+import { confirmDelete } from '../UIHelpers/confirmAlert';
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+const TableUser = (props) => {
+  const { users, getUsers } = props;
 
-  const getUsers = async () => {
-    const res = await axios.axiosGet('/user');
-    setUsers(res.data.body);
+  const editUser = (idUser) => {
+    const { history } = props;
+    return history.push(`/edit/${idUser}`);
   }
-  const userData = getUserDataToken();
+
   return (
-    <Container>
-      <Row>
-        <Col lg={12} className="my-3">
-          <h1>Welcome {userData.name}</h1>
-          <h2>List of users</h2>
-        </Col>
-        <Col>
-          <Card>
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>DNI</th>
-                  <th>Edad</th>
-                  <th>Register</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  users.map((user, i) => (
-                    <tr key={user._id}>
-                      <th scope="row">{i + 1}</th>
-                      <td>{user.name}</td>
-                      <td>{user.lastname}</td>
-                      <td>{user.dni}</td>
-                      <td>{user.age}</td>
-                      <td>{user.date}</td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </Table>
-          </Card>
-        </Col>
-      </Row>
-
-
-    </Container>
+    <Table dark className="rounded">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>DNI</th>
+          <th>Birthday</th>
+          <th>Registered</th>
+          <th className="text-center">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          users.map((user, i) => (
+            <tr key={user._id}>
+              <th scope="row">{i + 1}</th>
+              <td>{user.name}</td>
+              <td>{user.lastname}</td>
+              <td>{user.dni}</td>
+              <td>{getDayMonthYear(user.age)}</td>
+              <td>{getDayMonthYear(user.date)}</td>
+              <td>
+                <Row>
+                  <Col className="text-center">
+                    <Button block color="warning" className="text-white" onClick={() => editUser(user._id)}><IoIosCreate /></Button>
+                  </Col>
+                  <Col className="text-center">
+                    <Button block color="danger" onClick={() => confirmDelete(user._id, user.name, user.lastname, getUsers)}><IoIosTrash /></Button>
+                  </Col>
+                </Row>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </Table>
   );
 }
 
-export default TableUser;
+export default withRouter(TableUser);

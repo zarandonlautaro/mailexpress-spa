@@ -2,16 +2,22 @@
   font-family: "Heebo", sans-serif;
 }
 section {
-  min-height: 85vh;
+  min-height: 75vh;
+  background-color: #df4749;
 }
 footer {
-  color: #000;
-  padding: 2rem 0;
-  border-top: 1px solid #e7e7e7;
+  color: #fff;
+  padding: 1rem 0;
+
+  background-color: #1c1c1b;
 }
 .current {
   border-bottom: 4px solid white;
 }
 .current-danger {
   border-bottom: 4px solid red;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

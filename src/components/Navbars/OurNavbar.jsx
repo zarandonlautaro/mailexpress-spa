@@ -16,35 +16,39 @@ const OurNavbar = () => {
 
   const toggle = () => setIsOpen(!isOpen);
   return (
-    <Navbar color="dark" dark expand="md">
+    <Navbar light expand="md">
       <NavbarBrand tag={Link} to="/">
         <img src={logoMailExpress} alt="" />
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="mr-auto" navbar>
-          {
-            isLogin() ? (
-              <>
+        {
+          isLogin() ? (
+            <>
+              <Nav className="mr-auto" navbar>
                 <NavItem>
                   <NavLink tag={Link} activeClassName="current" to="/dashboard" exact>Dashboard</NavLink>
                 </NavItem>
+              </Nav>
+              <Nav className="ml-auto" navbar>
                 <NavItem>
                   <NavLink tag={Link} className="text-danger" activeClassName="current-danger" to="/" onClick={logOut} exact>Log Out</NavLink>
                 </NavItem>
+              </Nav>
+            </>
+          )
+            : (
+              <>
+                <Nav className="mr-auto" navbar>
+                  <NavItem>
+                    <NavLink tag={Link} className="font-weight-bold" activeClassName="current" to="/" exact>Login</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink tag={Link} className="font-weight-bold" activeClassName="current" to="/register">Register</NavLink>
+                  </NavItem>
+                </Nav>
               </>
-            )
-              : (
-                <>
-                  <NavItem>
-                    <NavLink tag={Link} activeClassName="current" to="/" exact>Login</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={Link} activeClassName="current" to="/register">Register</NavLink>
-                  </NavItem>
-                </>
-              )}
-        </Nav>
+            )}
       </Collapse>
     </Navbar>
   )

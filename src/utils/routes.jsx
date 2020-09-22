@@ -12,6 +12,7 @@ import Register from '../pages/Register';
 import Auth from '../pages/Auth';
 import Dashboard from '../pages/Dashboard';
 import PrivateRoute from '../utils/privateRoute';
+import Edit from '../pages/Edit';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
             <Route path="/" exact component={Login} />
             <Route path="/auth/:token" exact component={Auth} />
             <Route path="/register" exact component={Register} />
+            <Route path="/edit/:idUser" exact component={Edit} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <Redirect to="/" />
           </Layout>

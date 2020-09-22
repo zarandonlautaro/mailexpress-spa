@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from "react-router-dom";
-import { Container, Row, Col, Form, Button, Card, CardBody, CardHeader, } from 'reactstrap';
+import { Container, Row, Col, Form, Button, Card, CardBody, } from 'reactstrap';
 import { validateEmail } from '../../utils/formHelpers';
 import { toast } from 'react-toastify';
 import * as axios from '../../utils/axios';
-
 import OurInput from '../Inputs/OurInput';
 
 class FormLogin extends Component {
@@ -58,7 +57,7 @@ class FormLogin extends Component {
     const {
       success, body, message
     } = res.data;
-    if (success) this.validLogin(body)
+    if (success) return this.validLogin(body)
     return this.invalidLogin(message);
   }
 
@@ -78,12 +77,10 @@ class FormLogin extends Component {
     return (
       <Container>
         <Row className="pt-5">
-          <Col lg={6} sm={12} className="mx-auto">
+          <Col lg={4} sm={12} className="mx-auto">
             <Card>
-              <CardHeader>
-                Login to database of users
-              </CardHeader>
               <CardBody>
+                <h3>Sign In</h3>
                 <Form className="form" onSubmit={this.handleLogin}>
                   <OurInput
                     label="Email"
@@ -106,14 +103,18 @@ class FormLogin extends Component {
                   />
                   <Row>
                     <Col className="text-center">
-                      <Button disabled={disabledButton} color="primary" type="submit">
-                        Log In
+                      <Button block disabled={disabledButton} color="dark" type="submit">
+                        Sign In
                     </Button>
                     </Col>
-                    <Col className="text-center">
-                      <Button to="/register" color="secondary" outline tag={Link} className="UncontrolledAlert-link">
-                        Sign Up
-                    </Button>
+                  </Row>
+                  <hr></hr>
+                  <Row>
+                    <Col className="text-center cursor-pointer">
+                      Don't have an account?
+                      <Link to="/register" color="secondary" className="UncontrolledAlert-link font-weight-bold">
+                        {` Sign Up`}
+                      </Link>
                     </Col>
                   </Row>
                 </Form>

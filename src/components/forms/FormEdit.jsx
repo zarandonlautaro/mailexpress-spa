@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { Container, Row, Col, Form, Button, Card, CardBody } from 'reactstrap';
-import { validateEmail } from '../../utils/formHelpers';
+import { Container, Row, Col, Form, Button, Card, CardBody, CardHeader } from 'reactstrap';
+import { validateEmail, getInputDate } from '../../utils/formHelpers';
 import { toast } from 'react-toastify';
 import * as axios from '../../utils/axios';
 
 import OurInput from '../Inputs/OurInput';
 
-class FormRegister extends Component {
+class FormEdit extends Component {
   state = {
+    id: '',
     name: '',
     lastname: '',
     dni: '',
     age: '',
     email: '',
     password: '',
-    loading: false,
     errors: {
       name: '',
       lastname: '',
@@ -26,10 +26,29 @@ class FormRegister extends Component {
     }
   }
 
+  componentDidMount() {
+    return this.getUser();
+  }
+
+  getUser = async () => {
+    const { idUser } = this.props.match.params;
+    const res = await axios.axiosGet(`/user/${idUser}`);
+    const { success, message, body } = res.data;
+    if (success) {
+      return this.handleUser(body);
+    }
+    return toast.error(message)
+  }
+
+  handleUser = (user) => {
+    const { _id, name, lastname, dni, age, email, password, } = user;
+    return this.setState({ id: _id, name, lastname, dni, age: getInputDate(age), email, password, });
+  }
+
   handleChangeInputForm = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    return this.setState({ [name]: value });
   }
 
   handleValidateInputForm = (e) => {
@@ -50,11 +69,11 @@ class FormRegister extends Component {
     return this.setState({ errors, [name]: value });
   }
 
-  handleRegister = async (e) => {
+  handleEdit = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
-    const { name, lastname, dni, age, email, password, } = this.state;
-    const res = await axios.axiosPost('/user/register', {
+    const { name, lastname, dni, age, email, password, id } = this.state;
+    const res = await axios.axiosPut(`/user/${id}`, {
       name,
       lastname,
       dni,
@@ -62,43 +81,41 @@ class FormRegister extends Component {
       email,
       password,
     });
-    const {
-      success, body, message
-    } = res.data;
-    if (success) return this.validRegister(message, body)
-    return this.invalidRegister(message);
+    const { success, body, message } = res.data;
+    if (success) return this.validEdit(body)
+    return this.invalidEdit(message);
   }
 
-  validRegister = (message) => {
+  validEdit = (user) => {
     const { history } = this.props;
-    toast.success(message);
-    return history.push('/');
+    return history.push(`/dashboard`);
   }
 
-  invalidRegister = (message) => {
+  invalidEdit = (message) => {
     this.setState({ loading: false });
     return toast.error(message)
   }
 
   render() {
-    const { loading, errors: {
+    const { errors: {
       name,
       lastname,
       dni,
       age,
       email,
-      password,
     } } = this.state;
-    const disabledButton = loading;
     return (
       <Container>
-        <Row className="py-5">
+        <Row className="pt-5">
           <Col lg={6} sm={12} className="mx-auto">
             <Card>
+              <CardHeader>
+                Edit user: {`${this.state.name} ${this.state.lastname}`}
+              </CardHeader>
               <CardBody>
-                <h3>Sign Up</h3>
-                <Form className="form" onSubmit={this.handleRegister}>
+                <Form className="form" onSubmit={this.handleEdit}>
                   <OurInput
+                    value={this.state.name}
                     label="Name"
                     type="name"
                     name="name"
@@ -108,6 +125,7 @@ class FormRegister extends Component {
                     onBlur={this.handleValidateInputForm}
                   />
                   <OurInput
+                    value={this.state.lastname}
                     label="Lastname"
                     type="lastname"
                     name="lastname"
@@ -117,6 +135,7 @@ class FormRegister extends Component {
                     onBlur={this.handleValidateInputForm}
                   />
                   <OurInput
+                    value={this.state.dni}
                     label="DNI"
                     type="number"
                     name="dni"
@@ -126,6 +145,7 @@ class FormRegister extends Component {
                     onBlur={this.handleValidateInputForm}
                   />
                   <OurInput
+                    value={this.state.age}
                     label="Birthday"
                     type="date"
                     name="age"
@@ -135,6 +155,7 @@ class FormRegister extends Component {
                     onBlur={this.handleValidateInputForm}
                   />
                   <OurInput
+                    value={this.state.email}
                     label="Email"
                     type="email"
                     name="email"
@@ -143,30 +164,14 @@ class FormRegister extends Component {
                     onChange={this.handleChangeInputForm}
                     onBlur={this.handleValidateInputForm}
                   />
-                  <OurInput
-                    label="Password"
-                    type="password"
-                    name="password"
-                    error={password}
-                    placeholder="********"
-                    onKeyPress={this.handleKeyPress}
-                    onBlur={this.handleValidateInputForm}
-                    onChange={this.handleChangeInputForm}
-                  />
                   <Row>
                     <Col className="text-center">
-                      <Button color="dark" block disabled={disabledButton} type="submit">
-                        Sign Up
-                      </Button>
+                      <Button block color="danger" to="/dashboard" tag={Link} className="UncontrolledAlert-link">
+                        Cancel
+                    </Button>
                     </Col>
-                  </Row>
-                  <hr></hr>
-                  <Row>
-                    <Col className="text-center cursor-pointer">
-                      Do you have an account?
-                      <Link to="/" color="secondary" outline className="UncontrolledAlert-link font-weight-bold">
-                        {` Sign In`}
-                      </Link>
+                    <Col className="text-center">
+                      <Button block color="primary" type="submit">Update</Button>
                     </Col>
                   </Row>
                 </Form>
@@ -179,4 +184,4 @@ class FormRegister extends Component {
   }
 }
 
-export default withRouter(FormRegister);
+export default withRouter(FormEdit);
