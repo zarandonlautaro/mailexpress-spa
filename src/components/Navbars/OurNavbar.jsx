@@ -17,7 +17,7 @@ const OurNavbar = () => {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <Navbar light expand="md">
-      <NavbarBrand tag={Link} to="/">
+      <NavbarBrand tag={Link} to={isLogin() ? "/dashboard" : "/"}>
         <img src={logoMailExpress} alt="" />
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
