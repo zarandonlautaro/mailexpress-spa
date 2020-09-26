@@ -23,7 +23,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "command": "yarn build",
+    "commandOrigin": "ui",
+    "publish": "/opt/build/repo/build"
   },
   "browserslist": {
     "production": [
